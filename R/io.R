@@ -15,9 +15,9 @@
 qload <- function(pkg, file) {
     info_df <- qparse(pkg, file)
 
-    if(paste(info_df$class) != "TableNode") {
-        stop("Not a TableNode")
-    }
+    #if(paste(info_df$class) != "TableNode") {
+    #    stop("Not a TableNode")
+    #}
 
     pkg_pythonic <- stringr::str_replace_all(pkg, "/", "\\.")
     pkg_name <- paste0("quilt.data.", pkg_pythonic)
@@ -25,8 +25,5 @@ qload <- function(pkg, file) {
     file <- stringr::str_replace_all(file, "/", "$")
 
     df <- eval(parse(text = paste0("data$", file, "()")))
-    tmp <- tempfile(pattern = "quilt", fileext = "feather")
-    pyfeather <- reticulate::import(module = "feather")
-    pyfeather$write_dataframe(df$copy(), tmp)
-    feather::read_feather(tmp)
+    df
 }

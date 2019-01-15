@@ -19,7 +19,6 @@ qparse <- function(pkg_name, file) {
 
     # strip first layer of 'children'
     children <- contents$children
-
     # split the path
     nodes <- magrittr::extract2(stringr::str_split(file, "\\."), 1)
 
@@ -33,9 +32,9 @@ qparse <- function(pkg_name, file) {
     }
 
     # find the final subtable
-    final <- extract2(children, nodes[length(nodes)])
+    final <- magrittr::extract2(children, nodes[length(nodes)])
 
-    if(paste(final) == "GroupNode") {
+    if(paste(final) == "<quilt.tools.core.GroupNode>") {
         info <- dplyr::data_frame(
             name = paste(pkg_name, file),
             children = final$children,
@@ -43,7 +42,7 @@ qparse <- function(pkg_name, file) {
             # preorder_tablenodes = final$preorder_tablenodes,
             class = "GroupNode"
         )
-    } else if(paste(final) == "FileNode") {
+    } else if(paste(final) == "<quilt.tools.core.FileNode>") {
         info <- final
     } else {
         info <- dplyr::data_frame(
