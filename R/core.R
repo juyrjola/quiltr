@@ -42,7 +42,7 @@ qsearch <- function(str) {
 qpeek <- function(pkg, robust=FALSE) {
     pkg_split <- stringr::str_split(pkg, "/")[[1]]
     store <- reticulate::import("quilt.tools.store")
-    pkg_obj <- store$PackageStore$find_package(pkg_split[1], pkg_split[2])
+    pkg_obj <- store$PackageStore$find_package(NULL, pkg_split[1], pkg_split[2])
     if(is.null(pkg_obj)) {
         stop("Package not installed")
     }
